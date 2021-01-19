@@ -8,7 +8,19 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 // Bring in the token generation function from the token folder
 const genToken = require("../auth/token");
+// Bring in express router for validation
 const { check, validationResult } = require("express-validator");
+// Bring in nodemailer for sending emails
+var nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "tuneshdev@gmail.com",
+    pass: "mechanical2",
+  },
+  tls: { rejectUnauthorized: false },
+});
 
 // Users endpoints here 👇👇👇
 // This is the register endpoint
@@ -36,6 +48,13 @@ router.post(
       is_agent,
       is_Landlord,
     } = req.body;
+
+    var mailOptions = {
+      from: "tuneshdev@gmail.com",
+      to: req.body.email,
+      subject: "HOMIFY ACCOUNT CREATED SUCCESSFULLY",
+      text: `You have successfully created an account`,
+    };
     //   The password has to be hashed
     const hashedPassword = bcrypt.hashSync(password, 10);
     //   Add a new user
@@ -52,6 +71,13 @@ router.post(
     users
       .addUser(newUser)
       .then((member) => {
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(`JJ`, error);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+        });
         res.status(200).json({ message: `Success`, newUser });
       })
       .catch((error) => {
@@ -66,7 +92,7 @@ router.post(
   check("username").not().isEmpty().withMessage("Username is required"),
   check("password", "Password is required").isLength({ min: 5 }),
   (req, res) => {
-      const errors = validationResult(req);
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -77,10 +103,8 @@ router.post(
       .getUserBy(username)
       .then((member) => {
         //   Get the user from the database and compare input password to hashed password
-        console.log(`HYHYO`, member);
         if (member && bcrypt.compareSync(password, member.password)) {
           //If the user exists and password is okay, a token should be generated
-          console.log(`HUHU`, member);
 
           const token = genToken(member);
           res.status(200).json({
