@@ -1,0 +1,36 @@
+{
+  "name": "homify-BE",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TUNESHMAN/homify-BE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TUNESHMAN/homify-BE/issues"
+  },
+  "homepage": "https://github.com/TUNESHMAN/homify-BE#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.16",
+    "nodemon": "^2.0.7",
+    "sqlite3": "^5.0.1",
+    "uuid": "^8.3.2",
+    "yup": "^0.32.8"
+  }
+}
