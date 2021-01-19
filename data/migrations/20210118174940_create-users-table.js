@@ -8,8 +8,8 @@ exports.up = function (knex) {
     table.string("last_name", 128).notNullable();
     table.string("password", 128).notNullable();
     table.boolean("is_admin").notNullable();
-    // table.boolean("is_agent").notNullable();
-    // table.boolean("is_Landlord").notNullable();
+    table.boolean("is_agent").notNullable();
+    table.boolean("is_Landlord").notNullable();
   });
 };
 

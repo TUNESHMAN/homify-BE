@@ -35,7 +35,7 @@ function addUser({
 }
 
 function getUserBy(username) {
-  return userdb("users").where({ username }).first();
+  return userdb("users").where({ username });
 }
 
 function getUserById(id) {
