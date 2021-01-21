@@ -97,10 +97,11 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     let { username, password } = req.body;
-    console.log(`BODY`, req.body);
+
     // We need to first fish out the user from the db
     users
       .getUserBy(username)
+      .first()
       .then((member) => {
         //   Get the user from the database and compare input password to hashed password
         if (member && bcrypt.compareSync(password, member.password)) {
@@ -119,32 +120,32 @@ router.post(
       .catch((error) => {
         res.status(500).json({
           message: `Error login in, check your details or register`,
-          stack: error.stack,
+          stack: error,
         });
       });
   }
 );
 
 // Middleware for validating user inputs
-function validateUser(req, res, next) {
-  const addedUser = req.body;
-  console.log(`BUBU`, addedUser);
-  if (Object.keys(addedUser).length === 0) {
-    res.status(400).json({ message: "Invalid inputs" });
-  } else if (!addedUser.email) {
-    res.status(400).json({ message: "Please enter a valid email" });
-  } else if (!addedUser.first_name) {
-    res.status(400).json({ message: "Please input your first name" });
-  } else if (!addedUser.username) {
-    res.status(400).json({ message: "You have not chosen a username" });
-  } else if (!addedUser.last_name) {
-    res.status(400).json({ message: "Please input your last name" });
-  } else if (!addedUser.password) {
-    res.status(400).json({ message: "You have not chosen a password" });
-  } else {
-    next();
-  }
-}
+// function validateUser(req, res, next) {
+//   const addedUser = req.body;
+//   console.log(`BUBU`, addedUser);
+//   if (Object.keys(addedUser).length === 0) {
+//     res.status(400).json({ message: "Invalid inputs" });
+//   } else if (!addedUser.email) {
+//     res.status(400).json({ message: "Please enter a valid email" });
+//   } else if (!addedUser.first_name) {
+//     res.status(400).json({ message: "Please input your first name" });
+//   } else if (!addedUser.username) {
+//     res.status(400).json({ message: "You have not chosen a username" });
+//   } else if (!addedUser.last_name) {
+//     res.status(400).json({ message: "Please input your last name" });
+//   } else if (!addedUser.password) {
+//     res.status(400).json({ message: "You have not chosen a password" });
+//   } else {
+//     next();
+//   }
+// }
 
 // Export the router to be seen by the server
 module.exports = router;
