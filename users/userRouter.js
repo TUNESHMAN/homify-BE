@@ -119,8 +119,8 @@ router.post(
       })
       .catch((error) => {
         res.status(500).json({
-          message: `Error login in, check your details or register`,
-          stack: error,
+          message: error.message,
+          stack: error.stack,
         });
       });
   }

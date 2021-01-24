@@ -4,19 +4,19 @@ const helmet = require("helmet");
 const cors = require("cors");
 // Instantiate the server by invoking express
 const server = express();
-// Bring in the formRouter
-// const formRouter = require("./form/formRouter");
+// Bring in the houseRouter
+const houseRouter = require("./houses/houseRouter");
 // Import the user router
 const userRouter = require("./users/userRouter");
-// const authRouter = require("./auth/auth-router");
+
 // We use the middleware
 server.use(express.json());
 server.use(cors());
 server.use(helmet());
 server.use(logger);
-// server.use("/forms", formRouter);
+server.use("/api/house", houseRouter);
 server.use("/api/user", userRouter);
-// server.use("/api/auth", authRouter);
+
 // Flesh out a dummy API
 server.get("/", (req, res) => {
   res.send("<h2>Welcome to Homify!</h2>");
@@ -39,11 +39,3 @@ function logger(req, res, next) {
 
 // Export the server to be seen by other files
 module.exports = server;
-
-
-
-
-
-
-
-
