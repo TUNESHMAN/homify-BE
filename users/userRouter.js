@@ -26,18 +26,18 @@ var transporter = nodemailer.createTransport({
 // This is the register endpoint
 router.post(
   "/register",
-//   check("email", "Email is Required").isEmail(),
-//   check("first_name").not().isEmpty().withMessage("First name is required"),
-//   check("last_name").not().isEmpty().withMessage("Last name is required"),
-//   check("password", "Password is required").isLength({ min: 5 }),
-//   check("username").not().isEmpty().withMessage("Username is required"),
-//   check("is_agent", "Are you an agent?").isBoolean(),
-//   check("is_Landlord", "Are you a Landlord?").isBoolean(),
+  check("email", "Email is Required").isEmail(),
+  check("first_name").not().isEmpty().withMessage("First name is required"),
+  check("last_name").not().isEmpty().withMessage("Last name is required"),
+  check("password", "Password is required").isLength({ min: 5 }),
+  check("username").not().isEmpty().withMessage("Username is required"),
+  check("is_agent", "Are you an agent?").isBoolean(),
+  check("is_Landlord", "Are you a Landlord?").isBoolean(),
   (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
     const {
       email,

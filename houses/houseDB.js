@@ -1,6 +1,5 @@
 const houseDB = require("../data/dbConfig");
 
-
 function getHouses() {
   // This is the equivalent of select * from houses
   return houseDB("houses");
@@ -20,8 +19,6 @@ function addHouse({
     house_description,
     house_price,
     for_rent,
-    
-   
   });
 }
 
@@ -34,14 +31,28 @@ function getHouseById(id) {
   return houseDB("houses").where({ id }).first();
 }
 
-function updateHouse(id, changes) {
-  return houseDB("houses").where({ id }).update(changes);
+// Helper function to edit a house
+function updateHouse({
+  id,
+  house_type,
+  house_address,
+  house_description,
+  house_price,
+  for_rent,
+}) {
+  return houseDB("houses").where({ id }).update({
+    house_type,
+    house_address,
+    house_description,
+    house_price,
+    for_rent,
+  });
 }
 
 module.exports = {
-    getHouses,
-    addHouse,
-    removeHouse,
-    getHouseById,
-    updateHouse,
-  };
+  getHouses,
+  addHouse,
+  removeHouse,
+  getHouseById,
+  updateHouse,
+};
