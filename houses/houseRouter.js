@@ -52,7 +52,6 @@ router.post("/", authentication, checkAgent, (req, res) => {
 router.put("/:id", authentication, checkAgent, (req, res) => {
   const replacementHouse = req.body;
   const { id } = req.params;
-  console.log(`RE`, replacementHouse);
   house
     .updateHouse({
       id,
